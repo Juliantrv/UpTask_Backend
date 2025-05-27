@@ -31,18 +31,11 @@ export class ProjectController{
 
     static readonly getProjectById = async (req: Request, res: Response) => {
         try {
-            const { id } = req.params
-            const project = await Porject.findById(id).populate('tasks')
-            if(!project) {
-                const error = new Error('Proyecto no encontrado')
-                res.status(404).json({error: error.message})
-                return
-            }
-            
+            const project = req.project
             if(project.manager.toString() !== req.user.id.toString() && !project.team.includes(req.user.id)){
                 const error = new Error('Acción no válida')
                 res.status(404).json({error: error.message})
-                return    
+                return
             }
             res.json(project)
         } catch (error) {

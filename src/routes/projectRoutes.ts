@@ -26,14 +26,14 @@ router.get('/',
     ProjectController.getAllProjects
 )
 
+// Middleware valida que el projecto existe
+router.param('projectId',projectExist)
+
 router.get('/:projectId',
     param('projectId').isMongoId().withMessage('Id no válido'),
     handleInputErrors,
     ProjectController.getProjectById
 )
-
-// Middleware valida que el projecto existe
-router.param('projectId',projectExist)
 
 router.put('/:projectId',
     param('projectId').isMongoId().withMessage('Id no válido'),
