@@ -37,7 +37,8 @@ export class ProjectController{
                 res.status(404).json({error: error.message})
                 return
             }
-            res.json(project)
+            const projectWithTasks = await project.populate('tasks')
+            res.json(projectWithTasks)
         } catch (error) {
             console.log(error)
         }
